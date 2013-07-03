@@ -1,0 +1,215 @@
+//
+//  AppDelegate.m
+//  CrashAnalyser
+//
+//  Created by 61 on 13-7-3.
+//  Copyright (c) 2013年 61. All rights reserved.
+//
+
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    // Insert code here to initialize your application
+}
+
+- (IBAction)dysmBtnClicked:(id)sender
+{
+    NSOpenPanel *oPanel = [NSOpenPanel openPanel];
+    
+	[oPanel setCanChooseDirectories:NO];
+    [oPanel setCanChooseFiles:YES];
+	[oPanel setDirectoryURL:[NSURL fileURLWithPath:@"~"]];
+    
+    [oPanel beginWithCompletionHandler:^(NSInteger result) {
+        if (NSFileHandlingPanelOKButton == result) {
+            NSString *filePath = [[[oPanel URLs] objectAtIndex:0] path];
+            [self.dysmPathField setStringValue:filePath];
+        }
+    }];
+}
+
+- (IBAction)crBtnClicked:(id)sender
+{
+    NSOpenPanel *oPanel = [NSOpenPanel openPanel];
+    
+	[oPanel setCanChooseDirectories:NO];
+    [oPanel setCanChooseFiles:YES];
+	[oPanel setDirectoryURL:[NSURL fileURLWithPath:@"~"]];
+    
+    [oPanel beginWithCompletionHandler:^(NSInteger result) {
+        if (NSFileHandlingPanelOKButton == result) {
+            NSString *filePath = [[[oPanel URLs] objectAtIndex:0] path];
+            [self.crPathField setStringValue:filePath];
+        }
+    }];
+}
+
+- (IBAction)clearBtnClicked:(id)sender
+{
+    [self.resultView setString:@""];
+}
+
+- (IBAction)analyseBtnClicked:(id)sender
+{
+    [self analyseCrashReport];
+    return;
+}
+
+- (void)printStackInfoFromMemoryAddress:(NSArray *)memoryAddress
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (NSString *address in memoryAddress) {
+            NSString *result = [self getStackInfoFromMemoryAddress:address];
+            [self.resultView setString:[NSString stringWithFormat:@"%@\n%@",[self.resultView string], result]];
+        }
+    });
+}
+
+- (NSString *)getStackInfoFromMemoryAddress:(NSString *)memoryAddress
+{
+    NSTask *task;
+    task = [[NSTask alloc] init];
+    [task setLaunchPath: @"/usr/bin/atos"];
+    
+    NSString *executablePath = [self executableFilePathFromDYSMPath:self.dysmPathField.stringValue];
+    
+    NSMutableArray *arguments = [NSMutableArray array];
+    [arguments addObject:@"-o"];
+    [arguments addObject:executablePath];
+    [arguments addObject:@"-arch"];
+    [arguments addObject:@"x86_64"];
+    [arguments addObject:memoryAddress];
+    
+    [task setArguments: arguments];
+    
+    NSPipe *pipe;
+    pipe = [NSPipe pipe];
+    [task setStandardOutput: pipe];
+    
+    NSFileHandle *file;
+    file = [pipe fileHandleForReading];
+    
+    [task launch];
+    
+    NSData *data;
+    data = [file readDataToEndOfFile];
+    
+    NSString *result = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+    
+    return result;
+}
+
+- (NSString *)executableFilePathFromDYSMPath:(NSString *)dysmPath
+{
+    NSString *dysmName = [[NSURL URLWithString:dysmPath] lastPathComponent];
+    NSString *executableName = [dysmName substringWithRange:NSMakeRange(0, dysmName.length - 9)];
+    
+    return [NSString stringWithFormat:@"%@/Contents/Resources/DWARF/%@", dysmPath, executableName];
+}
+
+- (void)analyseCrashReport
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *filePath = self.crPathField.stringValue;
+        NSError *error;
+        NSString *content = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+        NSInteger thread = [self getCrashThreadFromContent:content];
+        NSString *threadInfo = [self getThreadInfoFromContent:content thread:thread];
+        NSString *bundleIdentifier = [self getBundleIdentifierFromContent:content];
+        
+        NSArray *memoryAddress = [self getMemoryAddressFromThreadInfo:threadInfo bundleIdentifier:bundleIdentifier];
+        [self printStackInfoFromMemoryAddress:memoryAddress];
+    });
+}
+
+- (NSInteger)getCrashThreadFromContent:(NSString *)content
+{
+    NSString *leftSymbol = @"Crashed Thread: ";
+    NSString *rightSymbol = @"Dispatch queue";
+    NSRange leftRange = [content rangeOfString:leftSymbol];
+    NSRange rightRange = [content rangeOfString:rightSymbol];
+    
+    if ((leftRange.location != NSNotFound) && (rightRange.location != NSNotFound)) {
+        NSInteger location = leftRange.location + leftRange.length;
+        NSInteger length = rightRange.location - leftRange.location - leftRange.length - 1;
+        NSRange thradStringRange = NSMakeRange(location, length);
+        NSString *thread = [content substringWithRange:thradStringRange];
+        
+        return [thread integerValue];
+    } else {
+        return NSNotFound;
+    }
+}
+
+- (NSString *)getThreadInfoFromContent:(NSString *)content thread:(NSInteger)thread
+{
+    NSString *startSymbol = [NSString stringWithFormat:@"Thread %ld Crashed", thread];
+    NSString *endSymbol = @"\n\n";
+    
+    NSRange startRange = [content rangeOfString:startSymbol];
+    NSRange endRange = [content rangeOfString:endSymbol options:0 range:NSMakeRange(startRange.location, content.length - startRange.location)];
+    
+    if (startRange.location != NSNotFound && endRange.location != NSNotFound) {
+        NSInteger location = startRange.location;
+        NSInteger length = endRange.location - startRange.location;
+        NSRange range = NSMakeRange(location, length);
+        
+        NSString *threadInfo = [content substringWithRange:range];
+        return threadInfo;
+    } else {
+        return nil;
+    }
+}
+
+- (NSArray *)getMemoryAddressFromThreadInfo:(NSString *)threadInfo bundleIdentifier:(NSString *)bundleIdentifier
+{
+    NSMutableArray *memoryAddress = [NSMutableArray array];
+    NSArray *stackInfos = [threadInfo componentsSeparatedByString:@"\n"];
+    
+    for (NSString *stackInfo in stackInfos) {
+        NSRange range = [stackInfo rangeOfString:bundleIdentifier];
+        if (range.location == NSNotFound) {
+            continue;
+        }
+        
+        NSArray *originParts = [stackInfo componentsSeparatedByString:@" "];
+        NSMutableArray *fiteredParts = [NSMutableArray array];
+        
+        for (NSString *part in originParts) {
+            if (part.length > 0) {
+                [fiteredParts addObject:[part stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            }
+        }
+        
+        if (fiteredParts.count > 3) {
+            [memoryAddress addObject:[fiteredParts objectAtIndex:2]];
+        }
+    }
+    
+    return memoryAddress;
+}
+
+- (NSString *)getBundleIdentifierFromContent:(NSString *)content
+{
+    NSString *startSymbol = @"Identifier:";
+    NSString *endSymbol = @"\n";
+    
+    NSRange startRange = [content rangeOfString:startSymbol];
+    NSRange endRange = [content rangeOfString:endSymbol options:0 range:NSMakeRange(startRange.location, content.length - startRange.location)];
+    
+    if (startRange.location != NSNotFound && endRange.location != NSNotFound) {
+        NSInteger location = startRange.location + startRange.length;
+        NSInteger length = endRange.location - startRange.location - startRange.length;
+        NSRange range = NSMakeRange(location, length);
+        
+        NSString *bundleIdentifier = [content substringWithRange:range];
+        return [bundleIdentifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];;
+    } else {
+        return nil;
+    }
+}
+@end
+

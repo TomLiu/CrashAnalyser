@@ -1,0 +1,310 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7804CD501784436A00D7D011 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7804CD4F1784436A00D7D011 /* Cocoa.framework */; };
+		7804CD5A1784436A00D7D011 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7804CD581784436A00D7D011 /* InfoPlist.strings */; };
+		7804CD5C1784436A00D7D011 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804CD5B1784436A00D7D011 /* main.m */; };
+		7804CD601784436A00D7D011 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7804CD5E1784436A00D7D011 /* Credits.rtf */; };
+		7804CD631784436A00D7D011 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804CD621784436A00D7D011 /* AppDelegate.m */; };
+		7804CD661784436A00D7D011 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7804CD641784436A00D7D011 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7804CD4C1784436A00D7D011 /* CrashAnalyser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrashAnalyser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7804CD4F1784436A00D7D011 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		7804CD521784436A00D7D011 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		7804CD531784436A00D7D011 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7804CD541784436A00D7D011 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7804CD571784436A00D7D011 /* CrashAnalyser-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CrashAnalyser-Info.plist"; sourceTree = "<group>"; };
+		7804CD591784436A00D7D011 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7804CD5B1784436A00D7D011 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7804CD5D1784436A00D7D011 /* CrashAnalyser-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CrashAnalyser-Prefix.pch"; sourceTree = "<group>"; };
+		7804CD5F1784436A00D7D011 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		7804CD611784436A00D7D011 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7804CD621784436A00D7D011 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7804CD651784436A00D7D011 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7804CD491784436A00D7D011 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7804CD501784436A00D7D011 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7804CD431784436A00D7D011 = {
+			isa = PBXGroup;
+			children = (
+				7804CD551784436A00D7D011 /* CrashAnalyser */,
+				7804CD4E1784436A00D7D011 /* Frameworks */,
+				7804CD4D1784436A00D7D011 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7804CD4D1784436A00D7D011 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7804CD4C1784436A00D7D011 /* CrashAnalyser.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7804CD4E1784436A00D7D011 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7804CD4F1784436A00D7D011 /* Cocoa.framework */,
+				7804CD511784436A00D7D011 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7804CD511784436A00D7D011 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7804CD521784436A00D7D011 /* AppKit.framework */,
+				7804CD531784436A00D7D011 /* CoreData.framework */,
+				7804CD541784436A00D7D011 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		7804CD551784436A00D7D011 /* CrashAnalyser */ = {
+			isa = PBXGroup;
+			children = (
+				7804CD611784436A00D7D011 /* AppDelegate.h */,
+				7804CD621784436A00D7D011 /* AppDelegate.m */,
+				7804CD641784436A00D7D011 /* MainMenu.xib */,
+				7804CD561784436A00D7D011 /* Supporting Files */,
+			);
+			path = CrashAnalyser;
+			sourceTree = "<group>";
+		};
+		7804CD561784436A00D7D011 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7804CD571784436A00D7D011 /* CrashAnalyser-Info.plist */,
+				7804CD581784436A00D7D011 /* InfoPlist.strings */,
+				7804CD5B1784436A00D7D011 /* main.m */,
+				7804CD5D1784436A00D7D011 /* CrashAnalyser-Prefix.pch */,
+				7804CD5E1784436A00D7D011 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7804CD4B1784436A00D7D011 /* CrashAnalyser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7804CD691784436A00D7D011 /* Build configuration list for PBXNativeTarget "CrashAnalyser" */;
+			buildPhases = (
+				7804CD481784436A00D7D011 /* Sources */,
+				7804CD491784436A00D7D011 /* Frameworks */,
+				7804CD4A1784436A00D7D011 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CrashAnalyser;
+			productName = CrashAnalyser;
+			productReference = 7804CD4C1784436A00D7D011 /* CrashAnalyser.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7804CD441784436A00D7D011 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = 61;
+			};
+			buildConfigurationList = 7804CD471784436A00D7D011 /* Build configuration list for PBXProject "CrashAnalyser" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7804CD431784436A00D7D011;
+			productRefGroup = 7804CD4D1784436A00D7D011 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7804CD4B1784436A00D7D011 /* CrashAnalyser */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7804CD4A1784436A00D7D011 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7804CD5A1784436A00D7D011 /* InfoPlist.strings in Resources */,
+				7804CD601784436A00D7D011 /* Credits.rtf in Resources */,
+				7804CD661784436A00D7D011 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7804CD481784436A00D7D011 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7804CD5C1784436A00D7D011 /* main.m in Sources */,
+				7804CD631784436A00D7D011 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7804CD581784436A00D7D011 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7804CD591784436A00D7D011 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7804CD5E1784436A00D7D011 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7804CD5F1784436A00D7D011 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		7804CD641784436A00D7D011 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7804CD651784436A00D7D011 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7804CD671784436A00D7D011 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7804CD681784436A00D7D011 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7804CD6A1784436A00D7D011 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CrashAnalyser/CrashAnalyser-Prefix.pch";
+				INFOPLIST_FILE = "CrashAnalyser/CrashAnalyser-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7804CD6B1784436A00D7D011 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CrashAnalyser/CrashAnalyser-Prefix.pch";
+				INFOPLIST_FILE = "CrashAnalyser/CrashAnalyser-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7804CD471784436A00D7D011 /* Build configuration list for PBXProject "CrashAnalyser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7804CD671784436A00D7D011 /* Debug */,
+				7804CD681784436A00D7D011 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7804CD691784436A00D7D011 /* Build configuration list for PBXNativeTarget "CrashAnalyser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7804CD6A1784436A00D7D011 /* Debug */,
+				7804CD6B1784436A00D7D011 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7804CD441784436A00D7D011 /* Project object */;
+}
