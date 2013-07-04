@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NSString+Helper.h"
 
 @implementation AppDelegate
 
@@ -53,6 +54,8 @@
 
 - (IBAction)clearBtnClicked:(id)sender
 {
+    [self.crPathField setStringValue:@""];
+    [self.reportView setString:@""];
     [self.resultView setString:@""];
 }
 
@@ -117,9 +120,12 @@
 - (void)analyseCrashReport
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *filePath = self.crPathField.stringValue;
-        NSError *error;
-        NSString *content = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+        NSString *content = self.reportView.string;
+        
+        if ([content stringByTrimmingWhitespaceAndNewLine].length == 0) {
+            return;
+        }
+        
         NSInteger thread = [self getCrashThreadFromContent:content];
         NSString *threadInfo = [self getThreadInfoFromContent:content thread:thread];
         NSString *bundleIdentifier = [self getBundleIdentifierFromContent:content];
@@ -184,7 +190,7 @@
         
         for (NSString *part in originParts) {
             if (part.length > 0) {
-                [fiteredParts addObject:[part stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+                [fiteredParts addObject:[part stringByTrimmingWhitespaceAndNewLine]];
             }
         }
         
@@ -210,7 +216,7 @@
         NSRange range = NSMakeRange(location, length);
         
         NSString *bundleIdentifier = [content substringWithRange:range];
-        return [bundleIdentifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];;
+        return [bundleIdentifier stringByTrimmingWhitespaceAndNewLine];;
     } else {
         return nil;
     }
