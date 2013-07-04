@@ -72,6 +72,7 @@
 - (IBAction)clearBtnClicked:(id)sender
 {
     [self.crPathField setStringValue:@""];
+    [self.remoteCrPathField setStringValue:@""];
     [self.reportView setString:@""];
     [self.resultView setString:@""];
 }
@@ -79,8 +80,28 @@
 - (IBAction)analyseBtnClicked:(id)sender
 {
     [self.resultView setString:@""];
+    
     [self analyseCrashReport];
     return;
+}
+
+- (IBAction)remoteBtnClicked:(id)sender
+{
+    NSString *path = self.remoteCrPathField.stringValue;
+    
+    if ([path stringByTrimmingWhitespaceAndNewLine].length == 0) {
+        return;
+    }
+    
+    NSURL *url = [NSURL URLWithString:path];
+    NSError *error;
+    NSString *content = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+    
+    if (error || [content stringByTrimmingWhitespaceAndNewLine].length == 0) {
+        return;
+    }
+    
+    self.reportView.string = [content stringByConvertHTMLBrToNewLine];
 }
 
 - (void)printStackInfoFromMemoryAddress:(NSArray *)memoryAddress
@@ -145,6 +166,11 @@
         }
         
         NSInteger thread = [self getCrashThreadFromContent:content];
+        
+        if (thread == NSNotFound) {
+            return;
+        }
+        
         NSString *threadInfo = [self getThreadInfoFromContent:content thread:thread];
         NSString *bundleIdentifier = [self getBundleIdentifierFromContent:content];
         

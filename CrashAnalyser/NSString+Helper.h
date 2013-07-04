@@ -10,4 +10,5 @@
 
 @interface NSString (Helper)
 - (NSString *)stringByTrimmingWhitespaceAndNewLine;
+- (NSString *)stringByConvertHTMLBrToNewLine;
 @end

@@ -15,4 +15,16 @@
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+- (NSString *)stringByConvertHTMLBrToNewLine
+{
+    NSString *result = [self copy];
+    NSArray *targetList = @[@"</br>", @"<br />"];
+    
+    for (NSString *target in targetList) {
+        result = [result stringByReplacingOccurrencesOfString:target withString:@"\n"];
+    }
+    
+    return result;
+}
+
 @end
