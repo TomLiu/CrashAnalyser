@@ -43,6 +43,10 @@
         if (NSFileHandlingPanelOKButton == result) {
             NSString *filePath = [[[oPanel URLs] objectAtIndex:0] path];
             [self.crPathField setStringValue:filePath];
+            
+            NSError *error;
+            NSString *content = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+            self.reportView.string = content;
         }
     }];
 }

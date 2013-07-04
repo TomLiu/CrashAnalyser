@@ -19,6 +19,7 @@
 @property (weak) IBOutlet NSTextField *crPathField;
 
 @property (strong) IBOutlet NSTextView *resultView;
+@property (strong) IBOutlet NSTextView *reportView;
 
 - (IBAction)dysmBtnClicked:(id)sender;
 - (IBAction)crBtnClicked:(id)sender;
