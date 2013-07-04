@@ -14,6 +14,15 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    [self prepare];
+}
+
+- (void)prepare
+{
+    NSString *recentDYSMPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"CARecentDYSMPath"];
+    if (recentDYSMPath && recentDYSMPath.length > 0) {
+        self.dysmPathField.stringValue = recentDYSMPath;
+    }
 }
 
 - (IBAction)dysmBtnClicked:(id)sender
@@ -28,6 +37,8 @@
         if (NSFileHandlingPanelOKButton == result) {
             NSString *filePath = [[[oPanel URLs] objectAtIndex:0] path];
             [self.dysmPathField setStringValue:filePath];
+            
+            [self saveRecentDYSMPathToDefaults:filePath];
         }
     }];
 }
@@ -52,6 +63,12 @@
     }];
 }
 
+- (void)saveRecentDYSMPathToDefaults:(NSString *)path
+{
+    [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"CARecentDYSMPath"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (IBAction)clearBtnClicked:(id)sender
 {
     [self.crPathField setStringValue:@""];
@@ -61,6 +78,7 @@
 
 - (IBAction)analyseBtnClicked:(id)sender
 {
+    [self.resultView setString:@""];
     [self analyseCrashReport];
     return;
 }
@@ -220,6 +238,12 @@
     } else {
         return nil;
     }
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
+{
+    [self.window orderFront:nil];
+    return YES;
 }
 @end
 
