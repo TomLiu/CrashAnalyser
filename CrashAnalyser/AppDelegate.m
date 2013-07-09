@@ -19,13 +19,13 @@
 
 - (void)prepare
 {
-    NSString *recentDYSMPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"CARecentDYSMPath"];
-    if (recentDYSMPath && recentDYSMPath.length > 0) {
-        self.dysmPathField.stringValue = recentDYSMPath;
+    NSString *recentDSYMPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"CARecentDYSMPath"];
+    if (recentDSYMPath && recentDSYMPath.length > 0) {
+        self.dsymPathField.stringValue = recentDSYMPath;
     }
 }
 
-- (IBAction)dysmBtnClicked:(id)sender
+- (IBAction)dsymBtnClicked:(id)sender
 {
     NSOpenPanel *oPanel = [NSOpenPanel openPanel];
     
@@ -36,7 +36,7 @@
     [oPanel beginWithCompletionHandler:^(NSInteger result) {
         if (NSFileHandlingPanelOKButton == result) {
             NSString *filePath = [[[oPanel URLs] objectAtIndex:0] path];
-            [self.dysmPathField setStringValue:filePath];
+            [self.dsymPathField setStringValue:filePath];
             
             [self saveRecentDYSMPathToDefaults:filePath];
         }
@@ -120,7 +120,7 @@
     task = [[NSTask alloc] init];
     [task setLaunchPath: @"/usr/bin/atos"];
     
-    NSString *executablePath = [self executableFilePathFromDYSMPath:self.dysmPathField.stringValue];
+    NSString *executablePath = [self executableFilePathFromDSYMPath:self.dsymPathField.stringValue];
     
     NSMutableArray *arguments = [NSMutableArray array];
     [arguments addObject:@"-o"];
@@ -148,12 +148,18 @@
     return result;
 }
 
-- (NSString *)executableFilePathFromDYSMPath:(NSString *)dysmPath
+- (NSString *)executableFilePathFromDSYMPath:(NSString *)dsymPath
 {
-    NSString *dysmName = [[NSURL URLWithString:dysmPath] lastPathComponent];
-    NSString *executableName = [dysmName substringWithRange:NSMakeRange(0, dysmName.length - 9)];
+    NSRange leftPos = [dsymPath rangeOfString:@"/" options:NSBackwardsSearch];
+    NSRange rightPos = [dsymPath rangeOfString:@".app.dSYM"];
     
-    return [NSString stringWithFormat:@"%@/Contents/Resources/DWARF/%@", dysmPath, executableName];
+    if (leftPos.location == NSNotFound || rightPos.location == NSNotFound) {
+        return nil;
+    }
+    
+    NSRange range = NSMakeRange(leftPos.location + 1, rightPos.location - leftPos.location - 1);
+    NSString *dsymName = [dsymPath substringWithRange:range];
+    return [NSString stringWithFormat:@"%@/Contents/Resources/DWARF/%@", dsymPath, dsymName];
 }
 
 - (void)analyseCrashReport

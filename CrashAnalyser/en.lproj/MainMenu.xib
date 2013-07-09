@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.6" systemVersion="12E55" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
+        <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.6"/>
     </dependencies>
     <objects>
@@ -605,13 +606,13 @@
                 <action selector="clearBtnClicked:" destination="626" id="638"/>
                 <action selector="clearBtnClicked:" destination="646" id="648"/>
                 <action selector="crBtnClicked:" destination="540" id="632"/>
-                <action selector="dysmBtnClicked:" destination="536" id="552"/>
+                <action selector="dsymBtnClicked:" destination="536" id="U9l-cf-ZJe"/>
                 <action selector="remoteBtnClicked:" destination="iDb-os-Yhe" id="Ash-vR-CQP"/>
                 <outlet property="analyseBtn" destination="589" id="605"/>
                 <outlet property="crPathField" destination="580" id="588"/>
                 <outlet property="crashReportBtn" destination="540" id="551"/>
-                <outlet property="dysmBtn" destination="536" id="550"/>
-                <outlet property="dysmPathField" destination="557" id="587"/>
+                <outlet property="dsymBtn" destination="536" id="VuK-ih-06m"/>
+                <outlet property="dsymPathField" destination="557" id="MYj-pw-YW0"/>
                 <outlet property="loadRemoteBtn" destination="iDb-os-Yhe" id="aL1-S0-8qr"/>
                 <outlet property="remoteCrPathField" destination="w33-MN-HKS" id="eE4-DC-GCp"/>
                 <outlet property="reportView" destination="650" id="653"/>
