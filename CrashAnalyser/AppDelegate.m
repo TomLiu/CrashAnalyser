@@ -93,15 +93,19 @@
         return;
     }
     
-    NSURL *url = [NSURL URLWithString:path];
-    NSError *error;
-    NSString *content = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
-    
-    if (error || [content stringByTrimmingWhitespaceAndNewLine].length == 0) {
-        return;
-    }
-    
-    self.reportView.string = [content stringByConvertHTMLBrToNewLine];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *url = [NSURL URLWithString:path];
+        NSError *error;
+        NSString *content = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+        
+        if (error || [content stringByTrimmingWhitespaceAndNewLine].length == 0) {
+            return;
+        }
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            self.reportView.string = [content stringByConvertHTMLBrToNewLine];
+        });
+    });
 }
 
 - (void)printStackInfoFromMemoryAddress:(NSArray *)memoryAddress
